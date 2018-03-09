@@ -27,7 +27,7 @@
       // Constructing a queryURL using the character name
       var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
        character + "&api_key=fYMn3JK4vkGskON1rNdYzlgOpHiHh5MC&limit=10";
-
+     
       // Performing an AJAX request with the queryURL 
         $.ajax({
         url: queryURL,
@@ -63,8 +63,8 @@
 
          // Prependng the animalDiv to the HTML page in the "#gifs-appear-here" div   
         $("#gifs-appear-here").prepend(characterDiv);
-          
-        };
+    }
+        });
     });
 
    </script>
