@@ -2,71 +2,118 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>GifTastic</title>
+  <meta charset="utf-8">
+  <title>Favorite Cartoon Character</title>
+  <style type="text/css">
+    button,
+    div,
+    form,
+    input {
+      margin: 10px;
+    }
+  </style>
 </head>
 
 <body>
-    <button data-character="mickeyMouse">Mickey Mouse</button>
-    <button data-character="donaldDuck">Donald Duck</button>
-    <button data-character="Goofy">Goofy</button>
-    <div id="gifs-appear-here"></div>
 
-    <!-- insert jQuery and Javascript-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <div class="container">
+    <h1>Favorite Cartoon Character</h1>
+
+    <!-- Characters will Get Dumped here -->
+    <div id="characters-view"></div>
+
+    
+    <!-- Rendered Buttons will get Dumped Here  -->
+    <div id="buttons-view"></div>
+        <button data search= "minnieMouse">Minnie Mouse</button>
+        <button data search= "daisyDuck">Daisy Duck</button>
+        <button data search= "pluto">Pluto</button>
+        <div id="gifs-appear-here"></div>
+       
+    <form id="character-form">
+      <label for="character-input">Add Favorite Cartoon Character</label>
+      <input type="text" id="character-input">
+      <br>
+
+      <!-- Button triggers new character to be added -->
+      <input id="add-character" type="submit" value="Add a Favorite Character">
+    </form>
+    <br>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
-   
-      //add click event listener to all buttons
-      $("button").on("click", function() {
+    
+    // Adding click event listen listener to all buttons
+    $("button").on("click", function() {
 
-      // Grabbing and storing the data-character property value from the button    
+      // Grabbing and storing the data property value from the button
       var character = $(this).attr("data-character");
 
       // Constructing a queryURL using the character name
       var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-       character + "&api_key=fYMn3JK4vkGskON1rNdYzlgOpHiHh5MC&limit=10";
-     
-      // Performing an AJAX request with the queryURL 
-        $.ajax({
-        url: queryURL,
-        method: "GET"
-        })
+       character + "&api_key=Bftf3aEQJl2Tmz99fBqWVMvjBBiYUsUQ&limit=10";
 
+      // Performing an AJAX request with the queryURL
+        $.ajax({
+          url: queryURL,
+          method: "GET"
+      })
         // After data comes back from the request
         .then(function(response) {
-        console.log(queryURL);
-        console.log(response);
+          console.log(queryURL);
 
-        // storing the data from the AJAX request in the results variable
-        var results = response.data;
+          console.log(response);
+          // storing the data from the AJAX request in the results variable
+          var results = response.data;
 
-        // Looping through each result item
-        for (var i = 0; i < results.length; i++) {
+          // Looping through each result item
+          for (var i = 0; i < results.length; i++) {
 
-        // Creating and storing a div tag    
-        var characterDiv = $("<div>");
+            // Creating and storing a div tag
+            var characterDiv = $("<div>");
 
-        // Creating a paragraph tag with the result item's rating
-        var p = $("<p>").text("Rating: " + results[i].rating);
+            // Creating a paragraph tag with the result item's rating
+            var p = $("<p>").text("Rating: " + results[i].rating);
 
-        // Creating and storing an image tag
-        var characterImage = $("<img>");
-        
-        // Setting the src attribute of the image to a property pulled off the result item
-        characterImage.attr("src", results[i].images.fixed_height.url);
+            // Creating and storing an image tag
+            var characterImage = $("<img>");
+            // Setting the src attribute of the image to a property pulled off the result item
+            characterImage.attr("src", results[i].images.fixed_height.url);
 
-        // Appending the paragraph and image tag to the characterDiv
-        characterDiv.append(p);
-        characterDiv.append(characterImage);
+            // Appending the paragraph and image tag to the animalDiv
+            characterDiv.append(p);
+            characterDiv.append(characterImage);
 
-         // Prependng the animalDiv to the HTML page in the "#gifs-appear-here" div   
-        $("#gifs-appear-here").prepend(characterDiv);
-    }
+            // Prependng the characterDiv to the HTML page in the "#gifs-appear-here" div
+            $("#gifs-appear-here").prepend(characterDiv);
+
+            $(".gif").on("click", function() {
+
+            // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
+            var state = $(this).attr("data-state");
+
+            // If the clicked image's state is still, update its src attribute to what its data-animate value is.
+            // Then, set the image's data-state to animate
+            // Else set src to the data-still value
+
+            if (state === "still") {
+              $(this).attr("src", $(this).attr("data-animate"));
+              $(this).attr("data-state", "animate");
+            } else {
+              $(this).attr("src", $(this).attr("data-still"));
+              $(this).attr("data-state", "still");
+      }
+    });
+          }
         });
     });
-
-   </script>
+  </script>
 </body>
+
+</html>
+
+      
+    </script>
+  </div>
+</body>
+
 </html>
